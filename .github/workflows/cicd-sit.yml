@@ -40,9 +40,14 @@ jobs:
           distribution: 'adopt'
 
       - name: Install Ionic and Cordova
-        run: |
-          npm install -g @ionic/cli@6.20.9 cordova@11.1.0
+        run: npm install -g @ionic/cli@6.20.9 cordova@11.1.0
 
       - name: Install packages
-        run: |
-          npm i
+        run: npm i
+
+      - name: Add android platform
+        run: ionic cordova platform add android@8 --no-resources
+
+      - name: Build android release APK
+        run: ionic cordova build android --release --prod
+
