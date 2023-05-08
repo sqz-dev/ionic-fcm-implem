@@ -41,10 +41,8 @@ jobs:
 
       - name: Set up Gradle
         uses: gradle/gradle-build-action@v2
-    
-      - name: Build with Gradle
-        run: | 
-           ./gradlew wrapper --gradle-version=6.1.1
+        with:
+          gradle-version: 6.1.1
 
       - name: Set Gradle environment variables
         run: echo "export PATH=${{ steps.gradle-setup.outputs.gradle_bin_dir }}:$PATH" >> $GITHUB_ENV
