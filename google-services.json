@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "99086098985",
+    "project_id": "ionic-fcm-implem",
+    "storage_bucket": "ionic-fcm-implem.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:99086098985:android:1fbb16f56604617c2ef238",
+        "android_client_info": {
+          "package_name": "ionic.fcm.implem"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "99086098985-7h46l719i8jhqvdlu05ird3mpgv3m4he.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChYZwJXRWSzBog-VSgSSLDU98SvSz2FOo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "99086098985-7h46l719i8jhqvdlu05ird3mpgv3m4he.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
