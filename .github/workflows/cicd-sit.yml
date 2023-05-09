@@ -61,8 +61,15 @@ jobs:
       - name: Install Ionic and Cordova
         run: npm install -g @ionic/cli@6.20.9 cordova@11.1.0
 
-      - name: Add permission
-        run: git update-index --chmod=+x ./_prep.sh
+      - name: Check if file exists
+        run: |
+          if test -f _prep.sh; then
+            echo "File exists"
+            chmod +x _prep.sh
+            echo "Added execute permission to file.
+          else
+            echo "File does not exist"
+          fi
 
       - name: Run custom script
         run: |
