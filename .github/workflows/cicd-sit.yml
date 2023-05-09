@@ -36,11 +36,24 @@ jobs:
         with:
             node-version: 14.x
 
+      # - name: Set up Android SDK
+      #   uses: android-actions/setup-android@v2
+      #   with:
+      #     sdk-version: '27.0.3'
+
       - name: Set up Android SDK
-        uses: android-actions/setup-android@v2
+        uses: android-actions/setup-android-sdk@v2
         with:
-          sdk-version: '27.0.3'
-          build-tools: '27.0.3'
+          sdk-platform: 'platforms;android-27'
+          ndk-version: '21.4.7075529'
+
+      - name: Set up Android SDK ZipAlign
+        run: |
+          export ANDROID_HOME=$RUNNER_TEMP/android-sdk
+          export PATH=$ANDROID_HOME/build-tools/27.0.3:$PATH
+
+      - name: Set executable permission
+        run: chmod +x $ANDROID_HOME/build-tools/27.0.3/zipalign
 
       - name: Set up JDK 8
         uses: actions/setup-java@v2

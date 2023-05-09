@@ -16,5 +16,5 @@ echo "date: ${date}";
 echo "pass: ${pass}";
 echo "apkName: ${apkName}";
 
-jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore sign/ionicdemo.jks -storepass "$pass" -keypass "$pass" ../platforms/android/app/build/outputs/apk/app-release-unsigned.apk ionicdemo
-zipalign -v -p -f 4 ../platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk ../platforms/android/app/build/outputs/apk/${apkName}
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore sign/ionicdemo.jks -storepass "$pass" -keypass "$pass" ${signerDir}/platforms/android/app/build/outputs/apk/app-release-unsigned.apk ionicdemo
+zipalign -v -p -f 4 ${signerDir}/platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk ${signerDir}/platforms/android/app/build/outputs/apk/${apkName}
