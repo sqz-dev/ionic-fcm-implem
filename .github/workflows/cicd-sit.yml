@@ -73,6 +73,19 @@ jobs:
       - name: Build android release APK
         run: ionic cordova build android --release --prod
 
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v1.0.0
+          release_name: Release v1.0.0
+          body: |
+            Release v1.0.0
+          draft: false
+          prerelease: false
+
       - name: Upload debug APK
         uses: actions/upload-artifact@v2
         with:
