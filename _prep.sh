@@ -10,6 +10,6 @@ rm -rf ./.sourcemaps ./node_modules ./platforms ./plugins ./www ./package-lock.j
 npm cache clean --force;
 npm i --prefer-online;
 ionic cordova platform add android@8 --no-resources;
-ionic cordova plugin add ./AgilaPlugin;
 cp ./google-services.json ./platforms/android/app;
-ionic cordova build android --configuration=buildDccUat;
+ionic cordova build android;
+ionic cordova build android --release --prod;
