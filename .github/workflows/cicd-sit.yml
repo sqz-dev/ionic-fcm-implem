@@ -20,18 +20,16 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: v1.0.0
-          release_name: Release v1.0.0
-          body: |
-            Release v1.0.0
-          draft: false
-          prerelease: false
+      - name: Get current directory
+        id: get_current_dir
+        run: echo "::set-output name=current_dir::$(pwd)"
+  
+      - name: Use current directory
+        run: |
+          echo "Current directory is: ${{ steps.get_current_dir.outputs.current_dir }}"
+          # Use the current directory variable in other commands
+          cd ${{ steps.get_current_dir.outputs.current_dir }}
+          # Perform other actions in the current directory
 
       - name: Setup Node.js
         uses: actions/setup-node@v1
@@ -63,37 +61,7 @@ jobs:
       - name: Install Ionic and Cordova
         run: npm install -g @ionic/cli@6.20.9 cordova@11.1.0
 
-      - name: Install packages
-        run: npm i
-
-      - name: Get current directory
-        id: get_current_dir
-        run: echo "::set-output name=current_dir::$(pwd)"
-  
-      - name: Use current directory
+      - name: Run custom script
         run: |
-          echo "Current directory is: ${{ steps.get_current_dir.outputs.current_dir }}"
-          # Use the current directory variable in other commands
-          cd ${{ steps.get_current_dir.outputs.current_dir }}
-          # Perform other actions in the current directory
-
-      - name: Add android platform
-        run: ionic cordova platform add android@8 --no-resources
-
-      - name: Build android debug APK
-        run: ionic cordova build android
-
-      - name: Build android release APK
-        run: ionic cordova build android --release --prod
-
-      - name: Upload debug APK
-        uses: actions/upload-artifact@v2
-        with:
-          name: app-dev
-          path: platforms/android/app/build/outputs/apk/debug/app-debug.apk
-
-      - name: Upload release APK
-        uses: actions/upload-artifact@v2
-        with:
-          name: app-dev
-          path: platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk
+          echo "Running custom script: Preparing project..."
+          ./_prep.sh
