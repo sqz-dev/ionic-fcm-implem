@@ -94,10 +94,9 @@ jobs:
       - name: Run custom signer script
         env:
           KEYPASS: ${{ secrets.KEYPASS }}
-          WORKSPACE: $GITHUB_WORKSPACE
         run: |
           echo "Running custom script: Sign release APK..."
-          ./sign/sign.sh $KEYPASS $WORKSPACE
+          ./sign/sign.sh $KEYPASS $GITHUB_WORKSPACE
 
       - name: Upload debug APK
         uses: actions/upload-artifact@v2
