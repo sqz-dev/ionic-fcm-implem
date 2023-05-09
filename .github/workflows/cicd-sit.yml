@@ -84,25 +84,14 @@ jobs:
           fi
 
       - name: Run custom signer script
+        env:
+          KEYPASS: ${{ secrets.KEYPASS }}
         run: |
           echo "Running custom script: Sign release APK..."
-          ./sign/sign.sh
+          ./sign/sign.sh $KEYPASS
 
       - name: Upload debug APK
         uses: actions/upload-artifact@v2
         with:
           name: app-dev
-          path: platforms/android/app/build/outputs/apk/debug
-
-#      - name: Upload release APK
-#        uses: actions/upload-artifact@v2
-#        with:
-#          name: app-dev
-#          path: platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk
-
-      - name: Upload signed release APK
-        uses: actions/upload-artifact@v2
-        with:
-          name: app-dev
-          path: platforms/android/app/build/outputs/apk/release
-              
+          path: platforms/android/app/build/outputs/apk
