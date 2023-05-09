@@ -7,7 +7,7 @@ date=$(date +%m%d%Y)
 pass=${1}
 apkName="AZ-Journey_${env^^}_v${ver}_${date}_VC${verCon}_RELEASE.apk"
 
-signerDir=$(pwd)
+signerDir="/home/runner/work/ionic-fcm-implem"
 
 echo "signerDir: ${signerDir}";
 echo "Ver: ${ver}";
@@ -17,4 +17,4 @@ echo "pass: ${pass}";
 echo "apkName: ${apkName}";
 
 jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore sign/ionicdemo.jks -storepass "$pass" -keypass "$pass" ${signerDir}/platforms/android/app/build/outputs/apk/app-release-unsigned.apk ionicdemo
-zipalign -v -p -f 4 ${signerDir}/platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk ${signerDir}/platforms/android/app/build/outputs/apk/${apkName}
+/usr/local/lib/android/sdk/build-tools/27.0.3/zipalign -v -p -f 4 ${signerDir}/platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk ${signerDir}/platforms/android/app/build/outputs/apk/${apkName}
