@@ -39,7 +39,8 @@ jobs:
       - name: Set up Android SDK
         uses: android-actions/setup-android@v2
         with:
-          sdk-version: '30.0.3'
+          sdk-version: '27.0.3'
+          build-tools: '27.0.3'
 
       - name: Set up JDK 8
         uses: actions/setup-java@v2
