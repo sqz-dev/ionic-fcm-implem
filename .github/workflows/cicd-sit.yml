@@ -64,6 +64,9 @@ jobs:
       - name: Set Gradle environment variables
         run: echo "export PATH=${{ steps.gradle-setup.outputs.gradle_bin_dir }}:$PATH" >> $GITHUB_ENV
 
+      - name: Run ls command for debugging
+        run: ls
+
       - name: Install Ionic and Cordova
         run: npm install -g @ionic/cli@6.20.9 cordova@11.1.0
 
@@ -81,9 +84,9 @@ jobs:
         run: |
           echo "Running custom script: Build project..."
           ./_prep.sh
-          
-      - name: Run ll command for debugging
-        run: ll
+
+      - name: Run ls command for debugging
+        run: ls
 
       - name: Check if signer script file exists
         run: |
