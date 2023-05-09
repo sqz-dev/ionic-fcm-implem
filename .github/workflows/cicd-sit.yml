@@ -61,6 +61,9 @@ jobs:
       - name: Install Ionic and Cordova
         run: npm install -g @ionic/cli@6.20.9 cordova@11.1.0
 
+      - name: Add permission
+        run: git update-index --chmod=+x ./_prep.sh
+
       - name: Run custom script
         run: |
           echo "Running custom script: Preparing project..."
