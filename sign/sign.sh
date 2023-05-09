@@ -20,5 +20,11 @@ echo "var2: ${var2}";
 
 ls;
 
-jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore sign/ionicdemo.jks -storepass "$pass" -keypass "$pass" ${signerDir}/platforms/android/app/build/outputs/apk/app-release-unsigned.apk ionicdemo
-/usr/local/lib/android/sdk/build-tools/27.0.3/zipalign -v -p -f 4 ${signerDir}/platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk ${signerDir}/platforms/android/app/build/outputs/apk/${apkName}
+if test -f platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk; then
+  echo "Build file exists"
+else
+  echo "Build file does not exist"
+fi
+
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore sign/ionicdemo.jks -storepass "$pass" -keypass "$pass" platforms/android/app/build/outputs/apk/app-release-unsigned.apk ionicdemo
+/usr/local/lib/android/sdk/build-tools/27.0.3/zipalign -v -p -f 4 platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk platforms/android/app/build/outputs/apk/${apkName}
