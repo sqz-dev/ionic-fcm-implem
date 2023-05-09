@@ -53,6 +53,17 @@ jobs:
       - name: Install packages
         run: npm i
 
+      - name: Get current directory
+        id: get_current_dir
+        run: echo "::set-output name=current_dir::$(pwd)"
+  
+      - name: Use current directory
+        run: |
+          echo "Current directory is: ${{ steps.get_current_dir.outputs.current_dir }}"
+          # Use the current directory variable in other commands
+          cd ${{ steps.get_current_dir.outputs.current_dir }}
+          # Perform other actions in the current directory
+
       - name: Add android platform
         run: ionic cordova platform add android@8 --no-resources
 
