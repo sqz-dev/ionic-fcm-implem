@@ -63,10 +63,10 @@ jobs:
 
       - name: Check if file exists
         run: |
-          if test -f _prep.sh then
+          if test -f _prep.sh; then
             echo "File exists"
             chmod +x _prep.sh
-            echo "Added execute permission to file.
+            echo "Added execute permission to file."
           else
             echo "File does not exist"
           fi
