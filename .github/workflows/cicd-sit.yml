@@ -29,8 +29,8 @@ jobs:
         uses: android-actions/setup-android@v2
         with:
           sdk-version: '27.0.3'
-          # ndk-version: '21.1.6352462'
-          # emulator-version: '30.5.5'
+          ndk-version: '25.2.9519653'
+          emulator-version: '30.5.5'
           arch: 'x64'
 
       - name: Set up JDK 8
@@ -67,6 +67,20 @@ jobs:
       - name: Add android platform
         run: ionic cordova platform add android@8 --no-resources
 
+      - name: Build android debug APK
+        run: ionic cordova build android
+
       - name: Build android release APK
         run: ionic cordova build android --release --prod
 
+      - name: Upload debug APK
+        uses: actions/upload-artifact@v1
+        with:
+          name: app-dev
+          path: platforms/android/app/build/outputs/apk/debug/app-debug.apk
+
+      - name: Upload release APK
+        uses: actions/upload-artifact@v1
+        with:
+          name: app-dev
+          path: platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk
