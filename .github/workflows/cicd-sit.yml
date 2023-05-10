@@ -80,26 +80,26 @@ jobs:
           chmod +x ./sign/sign.sh
           ./sign/sign.sh $KEYPASS
 
-      - name: Upload generated APKs
-        uses: actions/upload-artifact@v3
-        with:
-          name: app-release
-          path: platforms/android/app/build/outputs/apk
+      # - name: Upload generated APKs
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: app-release
+      #     path: platforms/android/app/build/outputs/apk
 
-      - name: Download Build Artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: app-release
-          path: ./downloaded-artifact
+      # - name: Download Build Artifact
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     name: app-release
+      #     path: ./downloaded-artifact
 
       - name: Zip directory
         run: |
-          zip -r downloaded-artifact/app-release.zip downloaded-artifact/release
+          zip -r downloaded-artifact/app-release.zip platforms/android/app/build/outputs/apk/release
 
-      - name: LS debug
-        run: |
-          ls downloaded-artifact;
-          ls downloaded-artifact/release;
+      # - name: LS debug
+      #   run: |
+      #     ls downloaded-artifact;
+      #     ls downloaded-artifact/release;
       
       - name: Create Release
         id: create_release
@@ -122,4 +122,3 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./downloaded-artifact/app-release.zip
           asset_name: app-release.zip
-          asset_content_type: application/zip
