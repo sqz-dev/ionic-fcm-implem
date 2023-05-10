@@ -42,16 +42,15 @@ jobs:
 
       - name: Run custom build script
         run: |
-          chmod +x _prep.sh
-          ./_prep.sh
+          chmod +x ./scripts/prep.sh
+          ./scripts/prep.sh
 
       - name: Run custom signer script
-        id: sign-step-script
         env:
           KEYPASS: ${{ secrets.KEYPASS }}
         run: |
-          chmod +x ./sign/sign.sh
-          ./sign/sign.sh $KEYPASS
+          chmod +x ./scripts/sign.sh
+          ./scripts/sign.sh $KEYPASS
 
       - name: Create Release
         id: create_release
@@ -77,3 +76,12 @@ jobs:
           asset_path: app-release.zip
           asset_name: app-release.zip
           asset_content_type: application/zip
+
+      # - name: Run upload script
+      #   env:
+      #     SHAREPOINT_URL: ${{ secrets.SHAREPOINT_URL }}
+      #     SHAREPOINT_USERNAME: ${{ secrets.SHAREPOINT_USERNAME }}
+      #     SHAREPOINT_PASSWORD: ${{ secrets.SHAREPOINT_PASSWORD }}
+      #   run: |
+      #     chmod +x ./scripts/upload.sh
+      #     ./scripts/upload.sh $SHAREPOINT_URL $SHAREPOINT_USERNAME $SHAREPOINT_PASSWORD
