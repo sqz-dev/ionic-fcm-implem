@@ -73,11 +73,22 @@ jobs:
           name: app-dev
           path: platforms/android/app/build/outputs/apk
 
+#      - name: github-tag-release
+#        # You may pin to the exact commit or the version.
+#        # uses: janryWang/github-tag-release@7dbe52cf0967783d198faac8e4b85dc8609572f9
+#        uses: janryWang/github-tag-release@main
+#        with:
+#          # the GITHUB_TOKEN
+#          github_token: ${{ secrets.GITHUB_PAT }}
+        
+  create-release:
+    runs-on: ubuntu-latest
+    steps:
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_PAT }}
         with:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
