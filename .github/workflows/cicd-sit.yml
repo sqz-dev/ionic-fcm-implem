@@ -37,7 +37,7 @@ jobs:
         run: |
           export ANDROID_HOME=$RUNNER_TEMP/android-sdk
           export PATH=$ANDROID_HOME/build-tools/27.0.3:$PATH
-          echo "PATH: ${PATH}"
+          echo $PATH
 
       - name: Set up JDK 8
         uses: actions/setup-java@v2
