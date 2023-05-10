@@ -76,15 +76,11 @@ jobs:
         id: sign-step-script
         env:
           KEYPASS: ${{ secrets.KEYPASS }}
-          SHA: ${{ github.sha }}
+          SHA: ${{ format('{0:8}', github.sha) }}
         run: |
           echo "Running custom script: Sign release APK..."
           chmod +x ./sign/sign.sh
           ./sign/sign.sh $KEYPASS $SHA
-
-      - name: Use Variables
-        run: |
-          echo "Using apkName: ${{ steps.sign-step-script.outputs.apkName }}"
 
       - name: Create Release
         id: create_release
@@ -92,11 +88,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.sign-step-script.outputs.apkName }}
-          release_name: ${{ steps.sign-step-script.outputs.apkName }}
+          tag_name: ${{ steps.sign-step-script.outputs.apkName }} ${{ format('{0:8}', github.sha) }}
+          release_name: ${{ steps.sign-step-script.outputs.apkName }} ${{ format('{0:8}', github.sha) }}
           body: |
             Release: ${{ steps.sign-step-script.outputs.apkName }}
-            SHA: ${{ github.sha }}
+            SHA: ${{ format('{0:8}', github.sha) }}
             Action Run Number: ${{ github.run_number }}
           draft: false
           prerelease: false
@@ -107,6 +103,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: app-release-${{ github.sha }}.zip
-          asset_name: app-release-${{ github.sha }}.zip
+          asset_path: app-release-${{ format('{0:8}', github.sha) }}.zip
+          asset_name: app-release-${{ format('{0:8}', github.sha) }}.zip
           asset_content_type: application/zip

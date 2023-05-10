@@ -6,7 +6,7 @@ verCon=$(grep -o 'android-versionCode="[^"]*"' config.xml | grep -o '[0-9]*')
 date=$(date +%m%d%Y)
 pass=${1}
 sha=${2}
-export apkName="AZ-Journey_${envApp^^}_v${ver}_${date}_VC${verCon}_RELEASE_${sha}.apk"
+export apkName="AZ-Journey_${envApp^^}_v${ver}_${date}_VC${verCon}_RELEASE.apk"
 
 echo "::set-output name=apkName::$apkName"
 
