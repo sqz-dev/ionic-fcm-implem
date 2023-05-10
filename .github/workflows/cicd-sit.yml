@@ -30,31 +30,12 @@ jobs:
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v2
-        with:
-          sdk-version: '27.0.3'
-
-      # - name: Set up Android SDK ZipAlign
-      #   run: |
-      #     export ANDROID_HOME=$RUNNER_TEMP/android-sdk
-      #     export PATH=$ANDROID_HOME/build-tools/27.0.3:$PATH
-      #     echo $PATH
 
       - name: Set up JDK 8
         uses: actions/setup-java@v2
         with:
           java-version: '8'
           distribution: 'adopt'
-
-      # - name: Set up Gradle
-      #   uses: gradle/gradle-build-action@v2
-      #   with:
-      #     gradle-version: 6.1.1
-
-      # - name: Set Gradle environment variables
-      #   run: |
-      #     echo ${{ steps.gradle-setup.outputs.gradle_bin_dir }}
-      #     echo "export PATH=${{ steps.gradle-setup.outputs.gradle_bin_dir }}:$PATH" >> $GITHUB_ENV
-      #     echo $PATH
 
       - name: Install Ionic and Cordova
         run: npm install -g @ionic/cli@6.20.9 cordova@11.1.0
@@ -88,10 +69,6 @@ jobs:
             Action Run Number: ${{ github.run_number }}
           draft: false
           prerelease: false
-          
-      - name: ===> TEST
-        run: |
-          echo "${{ steps.create_release.outputs.upload_url }}"
 
       - name: Upload Build Artifact to Release
         uses: actions/upload-release-asset@v1
