@@ -21,17 +21,6 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      - name: Get current directory
-        id: get_current_dir
-        run: echo "::set-output name=current_dir::$(pwd)"
-  
-      - name: Use current directory
-        run: |
-          echo "Current directory is: ${{ steps.get_current_dir.outputs.current_dir }}"
-          # Use the current directory variable in other commands
-          cd ${{ steps.get_current_dir.outputs.current_dir }}
-          # Perform other actions in the current directory
-
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
@@ -46,9 +35,6 @@ jobs:
         run: |
           export ANDROID_HOME=$RUNNER_TEMP/android-sdk
           export PATH=$ANDROID_HOME/build-tools/27.0.3:$PATH
-
-      # - name: Set executable permission
-      #   run: chmod +x $ANDROID_HOME/build-tools/27.0.3/zipalign
 
       - name: Set up JDK 8
         uses: actions/setup-java@v2
@@ -67,49 +53,19 @@ jobs:
       - name: Install Ionic and Cordova
         run: npm install -g @ionic/cli@6.20.9 cordova@11.1.0
 
-      - name: Check if build script file exists
-        run: |
-          if test -f _prep.sh; then
-            echo "File exists"
-            chmod +x _prep.sh
-            echo "Added execute permission to file."
-          else
-            echo "File does not exist"
-          fi
-
       - name: Run custom build script
         run: |
           echo "Running custom script: Build project..."
+          chmod +x _prep.sh;
           ./_prep.sh
-
-      - name: Check if signer script file exists
-        run: |
-          if test -f ./sign/sign.sh; then
-            echo "File exists"
-            chmod +x ./sign/sign.sh
-            echo "Added execute permission to file."
-          else
-            echo "File does not exist"
-          fi
 
       - name: Run custom signer script
         env:
           KEYPASS: ${{ secrets.KEYPASS }}
         run: |
           echo "Running custom script: Sign release APK..."
-          ./sign/sign.sh $KEYPASS $GITHUB_WORKSPACE
-
-#      - name: Install packages
-#        run: npm i
-
-#      - name: Add android platform
-#        run: ionic cordova platform add android@8
-
-#      - name: Build android debug APK
-#        run: ionic cordova build android
-
-#      - name: Build android release APK
-#        run: ionic cordova build android --release --prod
+          chmod +x ./sign/sign.sh
+          ./sign/sign.sh $KEYPASS
 
       - name: Upload debug APK
         uses: actions/upload-artifact@v2
@@ -117,23 +73,16 @@ jobs:
           name: app-dev
           path: platforms/android/app/build/outputs/apk
 
-#      - name: Create Release
-#        id: create_release
-#        uses: actions/create-release@v1
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        with:
-#          tag_name: v1.0.0
-#          release_name: Release v1.0.0
-#          body: |
-#            Release v1.0.0
-#          draft: false
-#          prerelease: false
-
-# /home/runner/work/ionic-fcm-implem/ionic-fcm-implem/platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk
-
-#      - name: Run custom script with secret
-#        run: |
-#          echo "Running custom script: Signing built APK..."
-#          export keypass=${{ secrets.MY_SECRET }}
-#          ./sign.sh
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: |
+            Release ${{ github.ref }}
+            Add release notes or additional information here.
+          draft: false
+          prerelease: false
