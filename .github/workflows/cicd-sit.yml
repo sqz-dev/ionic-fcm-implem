@@ -94,7 +94,7 @@ jobs:
 
       - name: Zip directory
         run: |
-          zip -r app-release.zip platforms/android/app/build/outputs/apk/release
+          zip -r -j app-release.zip platforms/android/app/build/outputs/apk/release
 
       - name: LS debug
         run: ls
