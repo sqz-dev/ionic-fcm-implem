@@ -23,16 +23,16 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      - name: Get current directory
-        id: get_current_dir
-        run: echo "::set-output name=current_dir::$(pwd)"
+      # - name: Get current directory
+      #   id: get_current_dir
+      #   run: echo "::set-output name=current_dir::$(pwd)"
 
-      - name: Use current directory
-        run: |
-          echo "Current directory is: ${{ steps.get_current_dir.outputs.current_dir }}"
-          # Use the current directory variable in other commands
-          cd ${{ steps.get_current_dir.outputs.current_dir }}
-          # Perform other actions in the current directory
+      # - name: Use current directory
+      #   run: |
+      #     echo "Current directory is: ${{ steps.get_current_dir.outputs.current_dir }}"
+      #     # Use the current directory variable in other commands
+      #     cd ${{ steps.get_current_dir.outputs.current_dir }}
+      #     # Perform other actions in the current directory
 
       - name: Setup Node.js
         uses: actions/setup-node@v2
@@ -73,23 +73,28 @@ jobs:
           ./_prep.sh
 
       - name: Run custom signer script
+        id: sign-step-script
         env:
           KEYPASS: ${{ secrets.KEYPASS }}
         run: |
           echo "Running custom script: Sign release APK..."
           chmod +x ./sign/sign.sh
           ./sign/sign.sh $KEYPASS
-      
+
+      - name: Use Variables
+        run: |
+          echo "Using apkName: ${{ steps.sign-step-script.outputs.apkName }}"
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v1.0.0
-          release_name: Release v1.0.0
+          tag_name: ${{ steps.sign-step-script.outputs.apkName }}
+          release_name: ${{ steps.sign-step-script.outputs.apkName }}
           body: |
-            Release v1.0.0 ${{ github.ref }}
+            ${{ steps.sign-step-script.outputs.apkName }}
           draft: false
           prerelease: false
 
