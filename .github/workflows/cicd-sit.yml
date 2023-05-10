@@ -23,6 +23,17 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
+      - name: Get current directory
+        id: get_current_dir
+        run: echo "::set-output name=current_dir::$(pwd)"
+
+      - name: Use current directory
+        run: |
+          echo "Current directory is: ${{ steps.get_current_dir.outputs.current_dir }}"
+          # Use the current directory variable in other commands
+          cd ${{ steps.get_current_dir.outputs.current_dir }}
+          # Perform other actions in the current directory
+
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
@@ -81,6 +92,20 @@ jobs:
           name: app-release
           path: ./downloaded-artifact
 
+      - name: Check if build script file exists
+        run: |
+          if test -f downloaded-artifact/; then
+            echo "File exists"
+          else
+            echo "File does not exist"
+          fi
+
+      - name: LS debug
+        run: ls
+
+      - name: LS debug
+        run: ls downloaded-artifact
+      
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
