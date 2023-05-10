@@ -8,8 +8,7 @@ pass=${1}
 export apkName="AZ-Journey_${envApp^^}_v${ver}_${date}_VC${verCon}_RELEASE.apk"
 
 echo "::set-output name=apkName::$apkName"
-echo "APKNAME=$apkName" >> "$GITHUB_ENV"
-echo $PATH
+echo "apk_name=${apkName}" >> "$GITHUB_ENV"
 
 jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore sign/ionicdemo.jks -storepass "$pass" -keypass "$pass" platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk ionicdemo;
 mkdir release

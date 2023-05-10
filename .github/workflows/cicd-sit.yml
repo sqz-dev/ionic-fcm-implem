@@ -23,6 +23,12 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
+      # - name: Set the value
+      #   run: echo "action_state=yellow" >> "$GITHUB_ENV"
+
+      # - name: Use the value
+      #   run: echo "${{ env.action_state }}"
+
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
@@ -45,16 +51,16 @@ jobs:
           java-version: '8'
           distribution: 'adopt'
 
-      - name: Set up Gradle
-        uses: gradle/gradle-build-action@v2
-        with:
-          gradle-version: 6.1.1
+      # - name: Set up Gradle
+      #   uses: gradle/gradle-build-action@v2
+      #   with:
+      #     gradle-version: 6.1.1
 
-      - name: Set Gradle environment variables
-        run: |
-          echo ${{ steps.gradle-setup.outputs.gradle_bin_dir }}
-          echo "export PATH=${{ steps.gradle-setup.outputs.gradle_bin_dir }}:$PATH" >> $GITHUB_ENV
-          echo $PATH
+      # - name: Set Gradle environment variables
+      #   run: |
+      #     echo ${{ steps.gradle-setup.outputs.gradle_bin_dir }}
+      #     echo "export PATH=${{ steps.gradle-setup.outputs.gradle_bin_dir }}:$PATH" >> $GITHUB_ENV
+      #     echo $PATH
 
       - name: Install Ionic and Cordova
         run: npm install -g @ionic/cli@6.20.9 cordova@11.1.0
@@ -65,21 +71,17 @@ jobs:
           chmod +x _prep.sh;
           ./_prep.sh
 
-      - name: Set the value
-        run: echo "action_state=yellow" >> "$GITHUB_ENV"
-
-      - name: Use the value
-        run: echo "${{ env.action_state }}" # This will output 'yellow'
-
       - name: Run custom signer script
         id: sign-step-script
         env:
           KEYPASS: ${{ secrets.KEYPASS }}
         run: |
           echo "Running custom script: Sign release APK..."
-          echo "${{ env.APKNAME }}" # This will output 'yellow'
           chmod +x ./sign/sign.sh
           ./sign/sign.sh $KEYPASS
+
+      - name: ===> Use the value apk_name
+        run: echo "${{ env.apk_name }}"
 
       - name: Create Release
         id: create_release
