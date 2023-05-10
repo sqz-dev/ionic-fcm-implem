@@ -42,8 +42,7 @@ jobs:
 
       - name: Run custom build script
         run: |
-          echo "Running custom script: Build project..."
-          chmod +x _prep.sh;
+          chmod +x _prep.sh
           ./_prep.sh
 
       - name: Run custom signer script
@@ -51,7 +50,6 @@ jobs:
         env:
           KEYPASS: ${{ secrets.KEYPASS }}
         run: |
-          echo "Running custom script: Sign release APK..."
           chmod +x ./sign/sign.sh
           ./sign/sign.sh $KEYPASS
 
