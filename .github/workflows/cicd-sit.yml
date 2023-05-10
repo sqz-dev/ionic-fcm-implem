@@ -54,6 +54,7 @@ jobs:
         run: |
           echo ${{ steps.gradle-setup.outputs.gradle_bin_dir }}
           echo "export PATH=${{ steps.gradle-setup.outputs.gradle_bin_dir }}:$PATH" >> $GITHUB_ENV
+          echo $PATH
 
       - name: Install Ionic and Cordova
         run: npm install -g @ionic/cli@6.20.9 cordova@11.1.0
