@@ -92,8 +92,14 @@ jobs:
           name: app-release
           path: ./downloaded-artifact
 
+      - name: Zip directory
+        run: |
+          zip -r downloaded-artifact/app-release.zip downloaded-artifact/release
+
       - name: LS debug
-        run: ls downloaded-artifact/release
+        run: |
+          ls downloaded-artifact;
+          ls downloaded-artifact/release;
       
       - name: Create Release
         id: create_release
@@ -101,10 +107,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v1.0.0
-          release_name: Release v1.0.0
+          tag_name: v1.0.0 ${{ github.ref }}
+          release_name: Release v1.0.0 ${{ github.ref }}
           body: |
-            Release v1.0.0
+            Release v1.0.0 ${{ github.ref }}
           draft: false
           prerelease: false
 
