@@ -85,11 +85,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          tag_name: Test Release
+          release_name: Test Release
           body: |
-            Release ${{ github.ref }}
-            Add release notes or additional information here.
+            Changes in this Release
+            - First Change
+            - Second Change
           draft: false
           prerelease: false
 
