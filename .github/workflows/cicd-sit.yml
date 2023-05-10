@@ -92,19 +92,8 @@ jobs:
           name: app-release
           path: ./downloaded-artifact
 
-      - name: Check if build script file exists
-        run: |
-          if test -f downloaded-artifact/; then
-            echo "File exists"
-          else
-            echo "File does not exist"
-          fi
-
       - name: LS debug
-        run: ls
-
-      - name: LS debug
-        run: ls downloaded-artifact
+        run: ls downloaded-artifact/release
       
       - name: Create Release
         id: create_release
