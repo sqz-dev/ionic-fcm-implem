@@ -87,8 +87,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.sign-step-script.outputs.apkName }} - ${{ github.sha }}
-          release_name: ${{ steps.sign-step-script.outputs.apkName }} - ${{ github.sha }}
+          tag_name: ${{ steps.sign-step-script.outputs.apkName }} - ${{ github.sha }} - ${{ github.run_number }}
+          release_name: ${{ steps.sign-step-script.outputs.apkName }} - ${{ github.sha }} - ${{ github.run_number }}
           body: |
             Release: ${{ steps.sign-step-script.outputs.apkName }}
             SHA: ${{ github.sha }}
