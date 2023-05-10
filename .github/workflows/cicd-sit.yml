@@ -94,7 +94,7 @@ jobs:
 
       - name: Zip directory
         run: |
-          zip -r downloaded-artifact/app-release.zip platforms/android/app/build/outputs/apk/release
+          zip -r app-release.zip platforms/android/app/build/outputs/apk/release
 
       - name: LS debug
         run: ls
@@ -118,5 +118,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./downloaded-artifact/app-release.zip
+          asset_path: app-release.zip
           asset_name: app-release.zip
