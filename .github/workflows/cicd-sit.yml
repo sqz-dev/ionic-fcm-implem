@@ -96,10 +96,8 @@ jobs:
         run: |
           zip -r downloaded-artifact/app-release.zip platforms/android/app/build/outputs/apk/release
 
-      # - name: LS debug
-      #   run: |
-      #     ls downloaded-artifact;
-      #     ls downloaded-artifact/release;
+      - name: LS debug
+        run: ls
       
       - name: Create Release
         id: create_release
