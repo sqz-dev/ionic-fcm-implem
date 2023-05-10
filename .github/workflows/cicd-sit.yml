@@ -80,10 +80,7 @@ jobs:
 #        with:
 #          # the GITHUB_TOKEN
 #          github_token: ${{ secrets.GITHUB_PAT }}
-        
-  create-release:
-    runs-on: ubuntu-latest
-    steps:
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
