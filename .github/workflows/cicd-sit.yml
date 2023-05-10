@@ -81,23 +81,17 @@ jobs:
 #          # the GITHUB_TOKEN
 #          github_token: ${{ secrets.GITHUB_PAT }}
 
-      - name: Create a Release
-        uses: elgohr/Github-Release-Action@v4
-        env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
-        with:
-          title: MyReleaseMessage
 
-#       - name: Create Release
-#         id: create_release
-#         uses: actions/create-release@v1
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.GITHUB_RELEASE_TOKEN }}
-#         with:
-#           tag_name: ${{ github.ref }}
-#           release_name: Release ${{ github.ref }}
-#           body: |
-#             Release ${{ github.ref }}
-#             Add release notes or additional information here.
-#           draft: false
-#           prerelease: false
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_RELEASE_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: |
+            Release ${{ github.ref }}
+            Add release notes or additional information here.
+          draft: false
+          prerelease: false
