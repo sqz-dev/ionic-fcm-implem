@@ -23,12 +23,6 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      # - name: Set the value
-      #   run: echo "action_state=yellow" >> "$GITHUB_ENV"
-
-      # - name: Use the value
-      #   run: echo "${{ env.action_state }}"
-
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
@@ -39,11 +33,11 @@ jobs:
         with:
           sdk-version: '27.0.3'
 
-      - name: Set up Android SDK ZipAlign
-        run: |
-          export ANDROID_HOME=$RUNNER_TEMP/android-sdk
-          export PATH=$ANDROID_HOME/build-tools/27.0.3:$PATH
-          echo $PATH
+      # - name: Set up Android SDK ZipAlign
+      #   run: |
+      #     export ANDROID_HOME=$RUNNER_TEMP/android-sdk
+      #     export PATH=$ANDROID_HOME/build-tools/27.0.3:$PATH
+      #     echo $PATH
 
       - name: Set up JDK 8
         uses: actions/setup-java@v2
@@ -80,23 +74,24 @@ jobs:
           chmod +x ./sign/sign.sh
           ./sign/sign.sh $KEYPASS
 
-      - name: ===> Use the value apk_name
-        run: echo "${{ env.apk_name }}"
-
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ steps.sign-step-script.outputs.apkName }}-${{ github.sha }}-${{ github.run_number }}
-          release_name: ${{ steps.sign-step-script.outputs.apkName }}-${{ github.sha }}-${{ github.run_number }}
+          tag_name: ${{ env.apk_name }}-${{ github.sha }}-${{ github.run_number }}
+          release_name: ${{ env.apk_name }}-${{ github.sha }}-${{ github.run_number }}
           body: |
-            Release: ${{ steps.sign-step-script.outputs.apkName }}
+            Release: ${{ env.apk_name }}
             SHA: ${{ github.sha }}
             Action Run Number: ${{ github.run_number }}
           draft: false
           prerelease: false
+          
+      - name: ===> TEST
+        run: |
+          ${{ steps.create_release.outputs.upload_url }}
 
       - name: Upload Build Artifact to Release
         uses: actions/upload-release-asset@v1

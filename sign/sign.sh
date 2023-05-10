@@ -5,9 +5,8 @@ ver=$(grep -o 'version="[0-9.]*"' config.xml | grep -o '[0-9.]*')
 verCon=$(grep -o 'android-versionCode="[^"]*"' config.xml | grep -o '[0-9]*')
 date=$(date +%m%d%Y)
 pass=${1}
-export apkName="AZ-Journey_${envApp^^}_v${ver}_${date}_VC${verCon}_RELEASE.apk"
+apkName="AZ-Journey_${envApp^^}_v${ver}_${date}_VC${verCon}_RELEASE.apk"
 
-echo "::set-output name=apkName::$apkName"
 echo "apk_name=${apkName}" >> "$GITHUB_ENV"
 
 jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore sign/ionicdemo.jks -storepass "$pass" -keypass "$pass" platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk ionicdemo;
