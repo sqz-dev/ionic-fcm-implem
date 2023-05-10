@@ -65,6 +65,15 @@ jobs:
           chmod +x _prep.sh;
           ./_prep.sh
 
+      - name: Save state
+        run: echo "{namea}={valuea}" >> $GITHUB_STATE
+
+      - name: Set output
+        run: echo "{nameb}={valueb}" >> $GITHUB_OUTPUT
+
+      - name: Set output
+        run: echo $GITHUB_APKNAME
+
       - name: Run custom signer script
         id: sign-step-script
         env:
