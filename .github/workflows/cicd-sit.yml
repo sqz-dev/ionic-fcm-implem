@@ -24,16 +24,11 @@ jobs:
 
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-      
-      - name: commands check
+
+      - name: Run custom build script
         run: |
-          where adb
-          where npm
-          where node
-          where javac
-          where jarsigner
-          where zipalign
-          where ionic
+          chmod +x ./scripts/prep.sh
+          ./scripts/prep.sh
 
 # ==========================================================================
       # - name: Setup Node.js
