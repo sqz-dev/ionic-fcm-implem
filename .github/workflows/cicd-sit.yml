@@ -27,8 +27,7 @@ jobs:
 
       - name: Run custom build script
         run: |
-          chmod +x ./scripts/prep.sh
-          ./scripts/prep.sh
+          bash ./scripts/prep.sh
 
 # ==========================================================================
       # - name: Setup Node.js
