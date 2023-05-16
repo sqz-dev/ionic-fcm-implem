@@ -8,7 +8,7 @@ $apkName = "AZ-Journey_${envApp}_v${ver}_${date}_VC${verCon}_RELEASE.apk"
 echo "apk_name=${apkName}" >> "$GITHUB_ENV"
 Write-Output "apk_name=${apkName}" | Out-File -Append $env:GITHUB_ENV
 
-jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore .scripts/ionicdemo.jks -storepass "$pass" -keypass "$pass" platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk ionicdemo;
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore .github/workflow/ionicdemo.jks -storepass "$pass" -keypass "$pass" platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk ionicdemo;
 
 mkdir release
 
