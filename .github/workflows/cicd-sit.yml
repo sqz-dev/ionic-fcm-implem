@@ -134,11 +134,12 @@ jobs:
     permissions:
       contents: write
     steps:
+      - uses: actions/checkout@v3
       - name: OS Check
         run: |
           echo "This step runs only on Windows"
           echo "RUNNER_OS=windows" >> $GITHUB_ENV
-  if: runner.os == 'Windows'
+    if: runner.os == 'Windows'
 
 # ==========================================================================
 
