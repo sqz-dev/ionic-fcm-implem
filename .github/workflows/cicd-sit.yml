@@ -30,19 +30,22 @@ jobs:
       #     bash ./scripts/prep.sh
 
 # ==========================================================================
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-            node-version: 14.x
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v2
+# Disable on WinX64 Runner =================================================
+#       - name: Setup Node.js
+#         uses: actions/setup-node@v2
+#         with:
+#             node-version: 14.x
 
-      - name: Set up JDK 8
-        uses: actions/setup-java@v2
-        with:
-          java-version: '8'
-          distribution: 'adopt'
+#       - name: Set up Android SDK
+#         uses: android-actions/setup-android@v2
+
+#       - name: Set up JDK 8
+#         uses: actions/setup-java@v2
+#         with:
+#           java-version: '8'
+#           distribution: 'adopt'
+# Disable on WinX64 Runner =================================================
 
       - name: Install Ionic and Cordova
         run: npm install -g @ionic/cli@6.20.9 cordova@11.1.0
