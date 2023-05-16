@@ -43,17 +43,22 @@ jobs:
         run: echo "This step runs only on Windows"
         if: runner.os == 'Windows'
 
+      - name: Check if file exists
+        run: |
+          if test -f "scripts/prep.sh"; then
+            echo "File exists"
+          else
+            echo "File does not exist"
+          fi
+
       - name: Check OS
         run: |
           if "${{ runner.os }}" == "Linux"; then
             echo "This is an Ubuntu runner."
-            echo "RUNNER_OS=ubuntu" >> $GITHUB_ENV
           elif "${{ runner.os }}" == "Windows"; then
             echo "This is a Windows runner."
-            echo "RUNNER_OS=windows" >> $GITHUB_ENV
           elif "${{ runner.os }}" == "macOS"; then
             echo "This is a macOS runner."
-            echo "RUNNER_OS=macos" >> $GITHUB_ENV
           fi
 
 # ==========================================================================
