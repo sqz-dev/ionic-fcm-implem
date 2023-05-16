@@ -56,11 +56,11 @@ jobs:
           ./scripts/prep.ps1
 
       - name: Run custom signer script
-        env:
-          KEYPASS: ${{ secrets.KEYPASS }}
+        # env:
+        #   KEYPASS: ${{ secrets.KEYPASS }}
         # chmod +x ./scripts/sign.sh # Uncomment if runner is Linux or MacOS
         run: |
-          ./scripts/sign.ps1 $KEYPASS
+          ./scripts/sign.ps1 ${{ secrets.KEYPASS }}
 
       - name: Create Release
         id: create_release
