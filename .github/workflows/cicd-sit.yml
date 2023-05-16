@@ -53,14 +53,14 @@ jobs:
       - name: Run custom build script 
         # chmod +x ./scripts/prep.sh # Uncomment if runner is Linux or MacOS
         run: |
-          ./scripts/prep.sh
+          ./scripts/prep.ps1
 
       - name: Run custom signer script
         env:
           KEYPASS: ${{ secrets.KEYPASS }}
         # chmod +x ./scripts/sign.sh # Uncomment if runner is Linux or MacOS
         run: |
-          ./scripts/sign.sh $KEYPASS
+          ./scripts/sign.ps1 $KEYPASS
 
       - name: Create Release
         id: create_release
