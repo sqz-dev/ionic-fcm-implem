@@ -22,3 +22,4 @@ mkdir release
 
 zipalign -v -p -f 4 platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk release/${apkName}
 
+zip -r -j app-release.zip release
