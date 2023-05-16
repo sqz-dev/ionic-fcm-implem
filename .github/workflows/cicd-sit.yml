@@ -8,6 +8,9 @@ on:
   push:
     branches: [ "cicd/apk-builder" ]
 
+env:
+  RUNNER_OS: ${{ runner.os }}
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -24,6 +27,34 @@ jobs:
 
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
+
+      - name: Step 1
+        run: echo "This step always runs"
+
+      - name: Step 2 - Ubuntu
+        run: echo "This step runs only on Ubuntu"
+        if: runner.os == 'Linux'
+
+      - name: Step 2 - macOS
+        run: echo "This step runs only on macOS"
+        if: runner.os == 'macOS'
+
+      - name: Step 2 - Windows
+        run: echo "This step runs only on Windows"
+        if: runner.os == 'Windows'
+
+      - name: Check OS
+        run: |
+          if [[ "${{ runner.os }}" == "Linux" ]]; then
+            echo "This is an Ubuntu runner."
+            echo "RUNNER_OS=ubuntu" >> $GITHUB_ENV
+          elif [[ "${{ runner.os }}" == "Windows" ]]; then
+            echo "This is a Windows runner."
+            echo "RUNNER_OS=windows" >> $GITHUB_ENV
+          elif [[ "${{ runner.os }}" == "macOS" ]]; then
+            echo "This is a macOS runner."
+            echo "RUNNER_OS=macos" >> $GITHUB_ENV
+          fi
 
 # ==========================================================================
 
