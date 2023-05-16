@@ -54,7 +54,7 @@ jobs:
       #       echo "File does not exist"
       #     fi
 
-      # region Ubuntu Runner ===========================================================
+      # region Ubuntu Runner ==========================================================
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
@@ -63,6 +63,8 @@ jobs:
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v2
+        with:
+          sdk-version: '27.0.3'
         if: runner.os == 'Linux'
 
       - name: Set up JDK 8
@@ -72,13 +74,23 @@ jobs:
           distribution: 'adopt'
         if: runner.os == 'Linux'
 
+#      - name: Set up Gradle
+#        uses: gradle/gradle-build-action@v2
+#        with:
+#          gradle-version: 6.1.1
+#        if: runner.os == 'Linux'
+
+#      - name: Set Gradle environment variables
+#        run: echo "export PATH=${{ steps.gradle-setup.outputs.gradle_bin_dir }}:$PATH" >> $GITHUB_ENV
+#        if: runner.os == 'Linux'
+
       - name: Install Ionic and Cordova
         run: npm install -g @ionic/cli@6.20.9 cordova@11.1.0
         if: runner.os == 'Linux'
 
       - name: Run custom build script
         run: |
-          chmod +x ./scripts/prep.sh # Uncomment if runner is Linux or MacOS
+          chmod +x ./scripts/prep.sh
           ./scripts/prep.sh
         if: runner.os == 'Linux'
 
@@ -86,12 +98,12 @@ jobs:
         env:
           KEYPASS: ${{ secrets.KEYPASS }}
         run: |
-          chmod +x ./scripts/sign.sh # Uncomment if runner is Linux or MacOS
-          ./scripts/sign.ps1 $KEYPASS
+          chmod +x ./scripts/sign.sh
+          ./scripts/sign.sh $KEYPASS
         if: runner.os == 'Linux'
       # endregion =====================================================================
 
-      # region Windows Runner ===========================================================
+      # region Windows Runner =========================================================
       - name: Run custom build script
         run: |
           ./scripts/prep.ps1
@@ -101,7 +113,7 @@ jobs:
         run: |
           ./scripts/sign.ps1 ${{ secrets.KEYPASS }}
         if: runner.os == 'Windows'
-      # endregion ======================================================================
+      # endregion =====================================================================
 
       - name: Create Release
         id: create_release
@@ -110,8 +122,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           # ${{ env.apk_name }}-${{ github.sha }}-${{ github.run_number }}
-          tag_name: ${{ github.run_number }}
-          release_name: ${{ github.run_number }}
+          tag_name: ${{ env.apk_name }}-${{ github.run_number }}
+          release_name: ${{ env.apk_name }}-${{ github.run_number }}
           body: |
             Release: ${{ env.apk_name }}
             SHA: ${{ github.sha }}
@@ -131,11 +143,23 @@ jobs:
 
 # ==========================================================================
 
-      # - name: Run upload script
-      #   env:
-      #     SHAREPOINT_URL: ${{ secrets.SHAREPOINT_URL }}
-      #     SHAREPOINT_USERNAME: ${{ secrets.SHAREPOINT_USERNAME }}
-      #     SHAREPOINT_PASSWORD: ${{ secrets.SHAREPOINT_PASSWORD }}
-      #   run: |
-      #     chmod +x ./scripts/upload.sh
-      #     ./scripts/upload.sh $SHAREPOINT_URL $SHAREPOINT_USERNAME $SHAREPOINT_PASSWORD
+#      - name: Upload debug APK
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: app-dev
+#          path: platforms/android/app/build/outputs/apk/debug/app-debug.apk
+
+#      - name: Upload release APK
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: app-dev
+#          path: platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk
+
+#       - name: Run upload script
+#         env:
+#           SHAREPOINT_URL: ${{ secrets.SHAREPOINT_URL }}
+#           SHAREPOINT_USERNAME: ${{ secrets.SHAREPOINT_USERNAME }}
+#           SHAREPOINT_PASSWORD: ${{ secrets.SHAREPOINT_PASSWORD }}
+#         run: |
+#           chmod +x ./scripts/upload.sh
+#           ./scripts/upload.sh $SHAREPOINT_URL $SHAREPOINT_USERNAME $SHAREPOINT_PASSWORD
