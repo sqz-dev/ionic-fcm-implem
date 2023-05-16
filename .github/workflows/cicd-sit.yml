@@ -50,16 +50,16 @@ jobs:
       - name: Install Ionic and Cordova
         run: npm install -g @ionic/cli@6.20.9 cordova@11.1.0
 
-      - name: Run custom build script
+      - name: Run custom build script 
+        # chmod +x ./scripts/prep.sh # Uncomment if runner is Linux or MacOS
         run: |
-          chmod +x ./scripts/prep.sh
           ./scripts/prep.sh
 
       - name: Run custom signer script
         env:
           KEYPASS: ${{ secrets.KEYPASS }}
+        # chmod +x ./scripts/sign.sh # Uncomment if runner is Linux or MacOS
         run: |
-          chmod +x ./scripts/sign.sh
           ./scripts/sign.sh $KEYPASS
 
       - name: Create Release
