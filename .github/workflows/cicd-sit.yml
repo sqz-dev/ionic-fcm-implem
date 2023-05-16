@@ -48,7 +48,7 @@ jobs:
 
       # - name: Check if file exists
       #   run: |
-      #     if test -f ".github/workflow/prep.sh"; then
+      #     if test -f ".github/workflows/prep.sh"; then
       #       echo "File exists"
       #     else
       #       echo "File does not exist"
@@ -90,28 +90,28 @@ jobs:
 
       - name: Run custom build script
         run: |
-          chmod +x ./.github/workflow/prep.sh
-          ./.github/workflow/prep.sh
+          chmod +x ./.github/workflows/prep.sh
+          ./.github/workflows/prep.sh
         if: runner.os == 'Linux'
 
       - name: Run custom signer script
         env:
           KEYPASS: ${{ secrets.KEYPASS }}
         run: |
-          chmod +x ./.github/workflow/sign.sh
-          ./.github/workflow/sign.sh $KEYPASS
+          chmod +x ./.github/workflows/sign.sh
+          ./.github/workflows/sign.sh $KEYPASS
         if: runner.os == 'Linux'
       # endregion =====================================================================
 
       # region Windows Runner =========================================================
       - name: Run custom build script
         run: |
-          ./.github/workflow/prep.ps1
+          ./.github/workflows/prep.ps1
         if: runner.os == 'Windows'
 
       - name: Run custom signer script
         run: |
-          ./.github/workflow/sign.ps1 ${{ secrets.KEYPASS }}
+          ./.github/workflows/sign.ps1 ${{ secrets.KEYPASS }}
         if: runner.os == 'Windows'
 
       - name: Test APK Name
@@ -165,5 +165,5 @@ jobs:
 #           SHAREPOINT_USERNAME: ${{ secrets.SHAREPOINT_USERNAME }}
 #           SHAREPOINT_PASSWORD: ${{ secrets.SHAREPOINT_PASSWORD }}
 #         run: |
-#           chmod +x ./.github/workflow/upload.sh
-#           ./.github/workflow/upload.sh $SHAREPOINT_URL $SHAREPOINT_USERNAME $SHAREPOINT_PASSWORD
+#           chmod +x ./.github/workflows/upload.sh
+#           ./.github/workflows/upload.sh $SHAREPOINT_URL $SHAREPOINT_USERNAME $SHAREPOINT_PASSWORD
