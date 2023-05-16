@@ -28,28 +28,31 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      - name: Step 1
-        run: echo "This step always runs"
-
       - name: Step 2 - Ubuntu
-        run: echo "This step runs only on Ubuntu"
+        run: |
+          echo "This step runs only on Ubuntu"
+          echo "RUNNER_OS=ubuntu" >> $GITHUB_ENV
         if: runner.os == 'Linux'
 
       - name: Step 2 - macOS
-        run: echo "This step runs only on macOS"
+        run: |
+          echo "This step runs only on macOS"
+          echo "RUNNER_OS=macos" >> $GITHUB_ENV
         if: runner.os == 'macOS'
 
       - name: Step 2 - Windows
-        run: echo "This step runs only on Windows"
+        run: |
+          echo "This step runs only on Windows"
+          echo "RUNNER_OS=windows" >> $GITHUB_ENV
         if: runner.os == 'Windows'
 
-      - name: Check if file exists
-        run: |
-          if test -f "scripts/prep.sh"; then
-            echo "File exists"
-          else
-            echo "File does not exist"
-          fi
+      # - name: Check if file exists
+      #   run: |
+      #     if test -f "scripts/prep.sh"; then
+      #       echo "File exists"
+      #     else
+      #       echo "File does not exist"
+      #     fi
 
       # region Ubuntu Runner ===========================================================
       - name: Setup Node.js
@@ -86,7 +89,7 @@ jobs:
           chmod +x ./scripts/sign.sh # Uncomment if runner is Linux or MacOS
           ./scripts/sign.ps1 $KEYPASS
         if: runner.os == 'Linux'
-        # endregion =====================================================================
+      # endregion =====================================================================
 
       # region Windows Runner ===========================================================
       - name: Run custom build script
