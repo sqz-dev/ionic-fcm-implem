@@ -114,7 +114,7 @@ jobs:
           ./.scripts/sign.ps1 ${{ secrets.KEYPASS }}
         if: runner.os == 'Windows'
 
-      - name: test
+      - name: Test APK Name
         run: |
           echo ${{env.apk_name}}
       # endregion =====================================================================
@@ -126,8 +126,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           # ${{ env.apk_name }}-${{ github.sha }}-${{ github.run_number }}
-          tag_name: ${{ github.run_number }}
-          release_name: ${{ github.run_number }}
+          tag_name: ${{ env.apk_name }}-${{ github.run_number }}
+          release_name: ${{ env.apk_name }}-${{ github.run_number }}
           body: |
             Release: ${{ env.apk_name }}
             SHA: ${{ github.sha }}

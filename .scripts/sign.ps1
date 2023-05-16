@@ -5,7 +5,6 @@ $date = Get-Date -Format "MMddyyyy"
 $pass = $args[0]
 $apkName = "AZ-Journey_${envApp}_v${ver}_${date}_VC${verCon}_RELEASE.apk"
 
-echo $apkName
 echo "apk_name=${apkName}" >> "$GITHUB_ENV"
 Write-Output "apk_name=${apkName}" | Out-File -Append $env:GITHUB_ENV
 
