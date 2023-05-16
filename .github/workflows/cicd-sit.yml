@@ -25,17 +25,13 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
-      # - name: Run custom build script
-      #   run: |
-      #     bash ./scripts/prep.sh
-
 # ==========================================================================
 
 # Disable on WinX64 Runner =================================================
 #       - name: Setup Node.js
 #         uses: actions/setup-node@v2
 #         with:
-#             node-version: 14.x
+#           node-version: 14.x
 
 #       - name: Set up Android SDK
 #         uses: android-actions/setup-android@v2
@@ -45,22 +41,33 @@ jobs:
 #         with:
 #           java-version: '8'
 #           distribution: 'adopt'
+
+#       - name: Install Ionic and Cordova
+#         run: npm install -g @ionic/cli@6.20.9 cordova@11.1.0
+
+#       - name: Run custom build script
+#         run: |
+#           chmod +x ./scripts/prep.sh # Uncomment if runner is Linux or MacOS
+#           bash ./scripts/prep.sh
+
+#       - name: Run custom signer script
+#         # env:
+#         #   KEYPASS: ${{ secrets.KEYPASS }}
+#         run: |
+#           chmod +x ./scripts/sign.sh # Uncomment if runner is Linux or MacOS
+#           bash ./scripts/sign.ps1 ${{ secrets.KEYPASS }}
+
 # Disable on WinX64 Runner =================================================
 
-      - name: Install Ionic and Cordova
-        run: npm install -g @ionic/cli@6.20.9 cordova@11.1.0
-
-      - name: Run custom build script 
-        # chmod +x ./scripts/prep.sh # Uncomment if runner is Linux or MacOS
+# Windows Runner ===========================================================
+      - name: Run custom build script
         run: |
           ./scripts/prep.ps1
 
       - name: Run custom signer script
-        # env:
-        #   KEYPASS: ${{ secrets.KEYPASS }}
-        # chmod +x ./scripts/sign.sh # Uncomment if runner is Linux or MacOS
         run: |
           ./scripts/sign.ps1 ${{ secrets.KEYPASS }}
+# Windows Runner ===========================================================
 
       - name: Create Release
         id: create_release
@@ -68,8 +75,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.run_number }} # ${{ env.apk_name }}-${{ github.sha }}-${{ github.run_number }}
-          release_name: ${{ github.run_number }} # ${{ env.apk_name }}-${{ github.sha }}-${{ github.run_number }}
+          # ${{ env.apk_name }}-${{ github.sha }}-${{ github.run_number }}
+          tag_name: ${{ github.run_number }}
+          release_name: ${{ github.run_number }}
           body: |
             Release: ${{ env.apk_name }}
             SHA: ${{ github.sha }}
@@ -83,7 +91,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: app-release.zip
+          asset_path: ./app-release.zip
           asset_name: app-release.zip
           asset_content_type: application/zip
 

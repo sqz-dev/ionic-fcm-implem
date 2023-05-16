@@ -10,7 +10,9 @@ echo $ver
 echo $verCon
 echo $date
 echo $apkName
-echo $PWD
+
+dir
+ls
 
 echo "apk_name=${apkName}" >> "$GITHUB_ENV"
 
