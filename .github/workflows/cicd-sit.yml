@@ -98,7 +98,7 @@ jobs:
         env:
           KEYPASS: ${{ secrets.KEYPASS }}
         run: |
-          chmod +x ../sign.sh
+          chmod +x ./.scripts/sign.sh
           ./.scripts/sign.sh $KEYPASS
         if: runner.os == 'Linux'
       # endregion =====================================================================
@@ -165,5 +165,5 @@ jobs:
 #           SHAREPOINT_USERNAME: ${{ secrets.SHAREPOINT_USERNAME }}
 #           SHAREPOINT_PASSWORD: ${{ secrets.SHAREPOINT_PASSWORD }}
 #         run: |
-#           chmod +x ./.upload.sh
+#           chmod +x ./.scripts/upload.sh
 #           ./.scripts/upload.sh $SHAREPOINT_URL $SHAREPOINT_USERNAME $SHAREPOINT_PASSWORD
