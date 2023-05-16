@@ -129,6 +129,17 @@ jobs:
           asset_name: app-release.zip
           asset_content_type: application/zip
 
+  build-windows:
+    runs-on: self-hosted
+    permissions:
+      contents: write
+    steps:
+      - name: OS Check
+        run: |
+          echo "This step runs only on Windows"
+          echo "RUNNER_OS=windows" >> $GITHUB_ENV
+  if: runner.os == 'Windows'
+
 # ==========================================================================
 
       # - name: Run upload script
