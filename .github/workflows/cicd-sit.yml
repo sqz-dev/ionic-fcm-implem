@@ -113,6 +113,10 @@ jobs:
         run: |
           ./.scripts/sign.ps1 ${{ secrets.KEYPASS }}
         if: runner.os == 'Windows'
+
+      - name: test
+        run: |
+          echo ${{env.apk_name}}
       # endregion =====================================================================
 
       - name: Create Release
