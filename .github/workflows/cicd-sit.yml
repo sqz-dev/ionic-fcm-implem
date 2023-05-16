@@ -48,7 +48,7 @@ jobs:
 
       # - name: Check if file exists
       #   run: |
-      #     if test -f "scripts/prep.sh"; then
+      #     if test -f ".scripts/prep.sh"; then
       #       echo "File exists"
       #     else
       #       echo "File does not exist"
@@ -90,28 +90,28 @@ jobs:
 
       - name: Run custom build script
         run: |
-          chmod +x ./scripts/prep.sh
-          ./scripts/prep.sh
+          chmod +x ./.scripts/prep.sh
+          ./.scripts/prep.sh
         if: runner.os == 'Linux'
 
       - name: Run custom signer script
         env:
           KEYPASS: ${{ secrets.KEYPASS }}
         run: |
-          chmod +x ./scripts/sign.sh
-          ./scripts/sign.sh $KEYPASS
+          chmod +x ../sign.sh
+          ./.scripts/sign.sh $KEYPASS
         if: runner.os == 'Linux'
       # endregion =====================================================================
 
       # region Windows Runner =========================================================
       - name: Run custom build script
         run: |
-          ./scripts/prep.ps1
+          ./.scripts/prep.ps1
         if: runner.os == 'Windows'
 
       - name: Run custom signer script
         run: |
-          ./scripts/sign.ps1 ${{ secrets.KEYPASS }}
+          ./.scripts/sign.ps1 ${{ secrets.KEYPASS }}
         if: runner.os == 'Windows'
       # endregion =====================================================================
 
@@ -161,5 +161,5 @@ jobs:
 #           SHAREPOINT_USERNAME: ${{ secrets.SHAREPOINT_USERNAME }}
 #           SHAREPOINT_PASSWORD: ${{ secrets.SHAREPOINT_PASSWORD }}
 #         run: |
-#           chmod +x ./scripts/upload.sh
-#           ./scripts/upload.sh $SHAREPOINT_URL $SHAREPOINT_USERNAME $SHAREPOINT_PASSWORD
+#           chmod +x ./.upload.sh
+#           ./.scripts/upload.sh $SHAREPOINT_URL $SHAREPOINT_USERNAME $SHAREPOINT_PASSWORD
